@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worldiex - Global News Network</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a4b8c;
+            --secondary-color: #0d2d59;
+            --accent-color: #ff6b35;
+            --light-color: #f8f9fa;
+            --dark-color: #202124;
+            --gray-color: #5f6368;
+            --border-color: #dadce0;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+
+        .logo-img i {
+            font-size: 24px;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--light-color);
+            border-radius: 30px;
+            padding: 8px 15px;
+            width: 40%;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            padding: 5px;
+            outline: none;
+        }
+
+        .search-bar button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--gray-color);
+        }
+
+        .user-actions a {
+            margin-left: 15px;
+            color: var(--gray-color);
+            text-decoration: none;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            transition: background 0.3s;
+        }
+
+        .nav-links li a:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a4b8c"/><text x="50%" y="50%" font-size="20" text-anchor="middle" fill="%23ffffff" font-family="Arial">Worldiex</text></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 30px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #e64a19;
+        }
+
+        /* News Grid */
+        .section-title {
+            font-size: 1.8rem;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            height: 180px;
+            overflow: hidden;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+            text-decoration: none;
+            display: block;
+        }
+
+        .news-excerpt {
+            color: var(--gray-color);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray-color);
+            font-size: 0.85rem;
+        }
+
+        /* Sidebar */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .trending-list {
+            list-style: none;
+        }
+
+        .trending-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .trending-list li:last-child {
+            border-bottom: none;
+        }
+
+        .trending-list a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .trending-list a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: var(--primary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .search-bar {
+                width: 60%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero {
+                text-align: center;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 5px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-form button {
+                border-radius: 5px;
+                padding: 12px;
+            }
+        }
+
+        /* Mobile Navigation */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+            }
+            
+            .nav-links li a {
+                padding: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-img">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <h1>Worldiex</h1>
+                </div>
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for news...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="user-actions">
+                    <a href="#"><i class="fas fa-user"></i> Sign In</a>
+                    <a href="#"><i class="fas fa-bell"></i></a>
+                    <a href="#"><i class="fas fa-bookmark"></i></a>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        <nav id="mainNav">
+            <div class="container">
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">World</a></li>
+                    <li><a href="#">Politics</a></li>
+                    <li><a href="#">Business</a></li>
+                    <li><a href="#">Technology</a></li>
+                    <li><a href="#">Science</a></li>
+                    <li><a href="#">Health</a></li>
+                    <li><a href="#">Entertainment</a></li>
+                    <li><a href="#">Sports</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Breaking News: Global Summit Addresses Climate Change</h2>
+                <p>World leaders gather to discuss urgent action on climate crisis as temperatures hit record highs across the globe.</p>
+                <a href="#" class="btn">Read Full Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h2 class="section-title">Latest News</h2>
+        <div class="content-wrapper">
+            <div class="main-content">
+                <div class="news-grid">
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-microchip" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Technology</span>
+                            <a href="#" class="news-title">New AI System Can Predict Diseases With 95% Accuracy</a>
+                            <p class="news-excerpt">Researchers have developed an artificial intelligence system that can analyze medical data and predict potential health issues before symptoms appear.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 2 hours ago</span>
+                                <span><i class="far fa-comment"></i> 42 comments</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-chart-line" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Business</span>
+                            <a href="#" class="news-title">Stock Market Reaches All-Time High Amid Economic Recovery</a>
+                            <p class="news-excerpt">Global markets surge as economies show strong signs of recovery post-pandemic, with technology and green energy sectors leading the way.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 4 hours ago</span>
+                                <span><i class="far fa-comment"></i> 28 comments</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-running" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Sports</span>
+                            <a href="#" class="news-title">National Team Qualifies for World Cup After Dramatic Win</a>
+                            <p class="news-excerpt">In a thrilling match that went into extra time, the national soccer team secured their place in the upcoming World Cup tournament.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 6 hours ago</span>
+                                <span><i class="far fa-comment"></i> 156 comments</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-theater-masks" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Entertainment</span>
+                            <a href="#" class="news-title">New Blockbuster Film Breaks Opening Weekend Records</a>
+                            <p class="news-excerpt">The latest installment in the popular film franchise has shattered box office records, bringing in over $300 million worldwide in its opening weekend.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 8 hours ago</span>
+                                <span><i class="far fa-comment"></i> 89 comments</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-flask" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Science</span>
+                            <a href="#" class="news-title">Scientists Discover New Species in Deep Ocean Exploration</a>
+                            <p class="news-excerpt">Marine biologists have identified several previously unknown species during a deep-sea expedition, shedding light on the biodiversity of the ocean depths.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 10 hours ago</span>
+                                <span><i class="far fa-comment"></i> 37 comments</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">
+                            <i class="fas fa-heartbeat" style="font-size: 48px;"></i>
+                        </div>
+                        <div class="news-content">
+                            <span class="news-category">Health</span>
+                            <a href="#" class="news-title">Breakthrough in Cancer Treatment Shows Promising Results</a>
+                            <p class="news-excerpt">Clinical trials for a new cancer therapy have shown a 70% success rate in patients with advanced stages of the disease, offering new hope for treatment.</p>
+                            <div class="news-meta">
+                                <span><i class="far fa-clock"></i> 12 hours ago</span>
+                                <span><i class="far fa-comment"></i> 64 comments</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <h3 class="sidebar-title">Trending News</h3>
+                <ul class="trending-list">
+                    <li><a href="#">International Space Station to Receive Major Upgrade</a></li>
+                    <li><a href="#">Electric Vehicle Sales Surpass Traditional Cars in Several Countries</a></li>
+                    <li><a href="#">Major Tech Company Announces Revolutionary Quantum Computer</a></li>
+                    <li><a href="#">Global Tourism Shows Strong Recovery With Record Numbers</a></li>
+                    <li><a href="#">New Study Reveals Benefits of Mediterranean Diet for Longevity</a></li>
+                    <li><a href="#">Renewable Energy Now Accounts for Over 30% of Global Electricity</a></li>
+                    <li><a href="#">Historic Peace Agreement Signed Between Rival Nations</a></li>
+                </ul>
+
+                <h3 class="sidebar-title" style="margin-top: 30px;">Weather</h3>
+                <div class="weather-widget">
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <i class="fas fa-sun" style="font-size: 2rem; color: #ffa500; margin-right: 10px;"></i>
+                        <div>
+                            <h4>New York</h4>
+                            <p>72°F / 22°C • Sunny</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="text-align: center;">
+                            <p>Mon</p>
+                            <i class="fas fa-sun" style="color: #ffa500;"></i>
+                            <p>74°F</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p>Tue</p>
+                            <i class="fas fa-cloud-sun" style="color: #7e7e7e;"></i>
+                            <p>70°F</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p>Wed</p>
+                            <i class="fas fa-cloud" style="color: #7e7e7e;"></i>
+                            <p>68°F</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <p>Thu</p>
+                            <i class="fas fa-cloud-showers-heavy" style="color: #1a73e8;"></i>
+                            <p>65°F</p>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Stay updated with the latest news, trends, and stories from around the world. Delivered daily to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About Worldiex</h4>
+                    <p>Worldiex brings you the latest news from around the world, with in-depth analysis and up-to-the-minute reporting.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">World</a></li>
+                        <li><a href="#">Politics</a></li>
+                        <li><a href="#">Business</a></li>
+                        <li><a href="#">Technology</a></li>
+                        <li><a href="#">Science</a></li>
+                        <li><a href="#">Health</a></li>
+                        <li><a href="#">Entertainment</a></li>
+                        <li><a href="#">Sports</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Advertise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 World Street, New York, NY 10001</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@worldiex.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Worldiex News Network. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('mainNav').classList.toggle('active');
+        });
+
+        // Simple JavaScript for newsletter form validation
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            
+            if (!email) {
+                alert('Please enter your email address.');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            alert('Thank you for subscribing to our newsletter!');
+            this.querySelector('input').value = '';
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Simple search functionality
+        document.querySelector('.search-bar button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-bar input').value;
+            if (searchTerm) {
+                alert(`Searching for: ${searchTerm}`);
+                document.querySelector('.search-bar input').value = '';
+            }
+        });
+
+        // Allow pressing Enter to search
+        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.search-bar button').click();
+            }
+        });
+    </script>
+</body>
+</html>
